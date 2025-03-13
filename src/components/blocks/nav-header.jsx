@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Menu, X, ChevronRight, Github, Linkedin, Mail } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "../../components/ui/scroll-area"
 
 const NavHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)

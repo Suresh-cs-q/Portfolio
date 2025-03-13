@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-import { Card, CardContent } from "./ui/card.tsx";
-import { Badge } from "./ui/badge.tsx";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Card, CardContent } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { ScrollArea } from "../components/ui/scroll-area";
 import { Code2, Brain, Trophy, Sparkles, ExternalLink, Github, Linkedin, Mail, ChevronDown, Terminal, Zap, ArrowDown, Rocket, Star, Phone } from 'lucide-react';
 import '../styles/Home.css';
 import profilePic from '../assets/profile.jpg';
