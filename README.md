@@ -1,99 +1,100 @@
-# Suresh Kumar - Portfolio
+# Personal Portfolio
 
-A modern, responsive portfolio website showcasing my skills, projects, and professional experience as a Full Stack Developer and AI Specialist.
+A modern, responsive portfolio website built with React, Vite, and TailwindCSS.
 
+## 🌟 Features
 
-## 🌟 Live Demo
+- 🎨 Modern UI/UX with Tailwind CSS
+- 📱 Fully Responsive Design
+- 🚀 Fast Performance with Vite
+- 🎭 Smooth Animations with Framer Motion
+- 🌙 Dark/Light Mode
+- 📊 Interactive Project Showcase
+- 📝 Education Journey Timeline
+- 💼 Professional Experience Section
+- 🛠️ Skills Showcase
+- 📫 Contact Form
 
-Visit the live portfolio: [sureshkumar.vercel.app](https://sureshkumar.vercel.app)
+## 🛠️ Tech Stack
 
-## ✨ Features
+- React.js
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Radix UI Components
+- Lucide React Icons
 
-- **Modern UI/UX**: Clean, professional design with smooth animations and transitions
-- **Responsive Layout**: Optimized for all devices from mobile to desktop
-- **Interactive Elements**: Engaging user experience with hover effects and animations
-- **Performance Optimized**: Fast loading times and smooth scrolling
-- **Accessibility Focused**: Designed with accessibility in mind
-- **Dark Mode**: Elegant dark theme for comfortable viewing
-- **SEO Friendly**: Structured for optimal search engine visibility
-
-## 🛠️ Technologies Used
-
-- **React**: Frontend library for building the user interface
-- **Vite**: Next-generation frontend tooling for faster development
-- **Framer Motion**: Animation library for creating fluid motion
-- **TailwindCSS**: Utility-first CSS framework for styling
-- **Lucide React**: Beautiful, consistent icons
-- **Radix UI**: Unstyled, accessible UI components
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js (v14.0.0 or later)
+- Node.js (v18 or higher)
 - npm or yarn
 
 ### Installation
 
-1. Clone the repository:
+1. Clone the repository
 
-   ```bash
-   git clone https://github.com/Suresh-cs-q/Suresh-Kumar.git
-   cd Suresh-Kumar
-   ```
+```bash
+git clone https://github.com/Suresh-cs-q/portfolio.git
+```
 
-2. Install dependencies:
+2. Navigate to project directory
 
-   ```bash
-   npm install
-   # or
-   yarn
-   ```
+```bash
+cd portfolio
+```
 
-3. Start the development server:
+3. Install dependencies
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+```bash
+npm install
+```
 
-4. Open your browser and visit `http://localhost:3000`
+4. Start development server
 
-## 📦 Build for Production
+```bash
+npm run dev
+```
+
+5. Build for production
 
 ```bash
 npm run build
-# or
-yarn build
 ```
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 portfolio/
-├── public/            # Static assets
 ├── src/
-│   ├── assets/        # Images and other assets
-│   │   ├── blocks/    # Larger component blocks
-│   │   └── ui/        # Reusable UI components
-│   ├── styles/        # Global styles
-│   ├── App.jsx        # Main App component
-│   └── main.jsx       # Entry point
-├── index.html         # HTML template
-└── vite.config.js     # Vite configuration
+│   ├── components/
+│   │   ├── blocks/
+│   │   └── ui/
+│   ├── styles/
+│   ├── lib/
+│   └── assets/
+├── public/
+└── ...config files
 ```
 
+## 🌐 Deployment
+
+This project is configured for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Deploy with default settings
 
 ## 📄 License
 
-This project is licensed under the Suresh Kumar
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Contact
+## 🤝 Contact
 
-- Email: Suresh.manghwar@gmail.com
-- LinkedIn: [linkedin.com/in/sureshkumar-cs](https://linkedin.com/in/sureshkumar-cs)
-- GitHub: [github.com/Suresh-cs-q](https://github.com/Suresh-cs-q)
+Suresh Kumar - [ft24-bscs-0022@qu.edu.pk](mailto:ft24-bscs-0022@qu.edu.pk)
+
+Project Link: [https://github.com/Suresh-cs-q/portfolio](https://github.com/Suresh-cs-q/portfolio)
 
 ---
 
