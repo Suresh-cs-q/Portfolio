@@ -1,18 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from './components/Home'
 import NavHeader from './components/blocks/nav-header'
 import './index.css'
 
 function App() {
-  // Apply dark mode to the document element
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Apply dark mode and initialize app
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
+    try {
+      document.documentElement.classList.add('dark')
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Error initializing app:', error)
+    }
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <NavHeader />
-      <main>
+      <main className="bg-background">
         <Home />
       </main>
       <footer className="py-8 bg-card/80 backdrop-blur-sm border-t border-primary/10 shadow-sm">
