@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from "../components/ui/card";
@@ -22,7 +22,7 @@ const Home = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   
   // For the typing effect
-  const roles = ["AI Specialist", "React Developer", "Competitive Programmer", "Full Stack Developer"];
+  const roles = useMemo(() => ["AI Specialist", "React Developer", "Competitive Programmer", "Full Stack Developer"], []);
   const [currentRole, setCurrentRole] = React.useState(0);
   const [displayText, setDisplayText] = React.useState("");
   const [isDeleting, setIsDeleting] = React.useState(false);
@@ -1618,8 +1618,8 @@ const Home = () => {
               {
                 icon: <Phone className="h-6 w-6" />,
                 label: "Phone",
-                value: "+92 315 3538451",
-                href: "tel:+923153538451",
+                value: "+92-313-1136263",
+                href: "tel:+923131136263",
                 color: "from-pink-500/20 to-red-500/20"
               }
             ].map((contact, index) => (
