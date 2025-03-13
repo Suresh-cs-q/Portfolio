@@ -15,18 +15,18 @@ const Home = () => {
   const textRef = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   // For parallax effect on scroll
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  
+
   // For the typing effect
   const roles = useMemo(() => ["AI Specialist", "React Developer", "Competitive Programmer", "Full Stack Developer"], []);
   const [currentRole, setCurrentRole] = React.useState(0);
   const [displayText, setDisplayText] = React.useState("");
   const [isDeleting, setIsDeleting] = React.useState(false);
-  
+
   // For the floating elements
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -38,40 +38,40 @@ const Home = () => {
         mouseY.set(y);
       }
     };
-    
+
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
-  
+
   // For the typing effect
   useEffect(() => {
     const role = roles[currentRole];
     const updateText = () => {
       if (!isDeleting) {
         setDisplayText(role.substring(0, displayText.length + 1));
-        
+
         if (displayText.length === role.length) {
           setTimeout(() => setIsDeleting(true), 1500);
         }
       } else {
         setDisplayText(role.substring(0, displayText.length - 1));
-        
+
         if (displayText.length === 0) {
           setIsDeleting(false);
           setCurrentRole((currentRole + 1) % roles.length);
         }
       }
     };
-    
+
     const timeout = setTimeout(updateText, isDeleting ? 50 : 100);
     return () => clearTimeout(timeout);
   }, [displayText, currentRole, isDeleting, roles]);
-  
+
   // Handle scroll to projects section
   const handleScrollToProjects = () => {
     projectsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-  
+
   // Enhanced floating elements with more variety
   const floatingElements = [
     { icon: <Terminal className="text-primary/70" />, delay: 0, duration: 8, size: "text-2xl" },
@@ -82,12 +82,12 @@ const Home = () => {
     { icon: <Rocket className="text-primary/70" />, delay: 5, duration: 8, size: "text-xl" },
     { icon: <Star className="text-primary/70" />, delay: 6, duration: 10, size: "text-2xl" },
   ];
-  
+
   // Transform values for the profile image parallax effect
   const imageX = useTransform(mouseX, [0, 1000], [-15, 15]);
   const imageY = useTransform(mouseY, [0, 1000], [-15, 15]);
   const imageRotate = useTransform(mouseX, [0, 1000], [-5, 5]);
-  
+
   // Spring animations for smoother movement
   const springImageX = useSpring(imageX, { stiffness: 100, damping: 30 });
   const springImageY = useSpring(imageY, { stiffness: 100, damping: 30 });
@@ -95,17 +95,21 @@ const Home = () => {
 
   return (
     <div className="w-full">
-      <section 
-        id="home" 
+      <section
+        id="home"
         ref={heroRef}
-        className="min-h-[100vh] w-full relative overflow-hidden flex items-center pt-32 md:pt-24"
+        className="min-h-screen w-full relative overflow-hidden flex flex-col justify-center"
+        style={{ 
+          paddingTop: '5rem', 
+          paddingBottom: '2rem' 
+        }}
       >
         {/* Simplified background with subtle grid */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background/80" />
         </div>
-        
+
         {/* Simplified floating elements */}
         {floatingElements.map((element, index) => (
           <motion.div
@@ -130,49 +134,109 @@ const Home = () => {
             {element.icon}
           </motion.div>
         ))}
-        
+
         {/* Main Content Container with improved layout */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 py-8 md:py-4 w-full max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl flex-grow flex items-center">
+          <div className="flex flex-col items-center w-full">
             
-            {/* Left Column - Enhanced Text Content */}
-            <motion.div
-              ref={textRef}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="flex flex-col space-y-6 lg:pr-8"
+            {/* Name with gradient and animated reveal - Centered at top */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-center"
             >
-              {/* Enhanced name with gradient and animated reveal */}
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
+              <motion.span
+                className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent inline-block"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <motion.span 
-                  className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent inline-block"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  Suresh Kumar
-                </motion.span>
+                Suresh Kumar
+              </motion.span>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+                className="h-1 bg-gradient-to-r from-blue-600 to-indigo-500 mt-2 rounded-full"
+              />
+            </motion.h1>
+
+            {/* Profile Image with Tech Badges - Centered */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+              className="relative mb-10 mt-4"
+            >
+              {/* Enhanced profile image with parallax effect */}
+              <motion.div
+                className="relative z-10"
+                style={{
+                  x: springImageX,
+                  y: springImageY,
+                  rotate: springImageRotate,
+                }}
+              >
+                {/* Enhanced image container with border */}
                 <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-                  className="h-1 bg-gradient-to-r from-blue-600 to-indigo-500 mt-2 rounded-full"
-                />
-              </motion.h1>
-              
-              {/* Enhanced role display with improved styling */}
+                  className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Gradient border with improved styling */}
+                  <div className="absolute inset-0 p-1.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full">
+                    <div className="w-full h-full rounded-full overflow-hidden">
+                      {/* Image with enhanced quality */}
+                      <div className="w-full h-full relative">
+                        <img
+                          src={profilePic}
+                          alt="Suresh Kumar"
+                          className="w-full h-full object-cover"
+                          style={{
+                            filter: 'contrast(1.05) brightness(1.02)',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Tech-related floating badges around the image */}
+                {[
+                  { icon: <Code2 className="h-4 w-4" />, text: "React Developer", position: "-top-4 -right-4" },
+                  { icon: <Zap className="h-4 w-4" />, text: "JavaScript Expert", position: "bottom-0 -left-8" },
+                  { icon: <Sparkles className="h-4 w-4" />, text: "Front-End Specialist", position: "-bottom-4 right-10" },
+                  { icon: <Terminal className="h-4 w-4" />, text: "Web Developer", position: "-top-4 -left-4" },
+                
+                ].map((badge, index) => (
+                  <motion.div
+                    key={badge.text}
+                    className={`absolute ${badge.position} bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-primary/20 shadow-lg flex items-center gap-1.5 z-20`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 1 + (index * 0.2) }}
+                    whileHover={{
+                      scale: 1.1,
+                      boxShadow: "0 0 20px rgba(37, 99, 235, 0.2)",
+                    }}
+                  >
+                    {badge.icon}
+                    <span>{badge.text}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Content Section - Max width for better readability */}
+            <div className="max-w-3xl mx-auto text-center">
+              {/* Role display with improved styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.4 }}
-                className="text-xl sm:text-2xl font-medium mb-8"
+                className="text-lg sm:text-xl font-medium mb-6"
               >
-                <span className="inline-flex items-center gap-3">
+                <span className="inline-flex items-center gap-3 justify-center">
                   <motion.div
                     animate={{ rotate: [0, 5, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -185,31 +249,31 @@ const Home = () => {
                 </span>
               </motion.div>
 
-              {/* Enhanced description with improved typography and spacing */}
+              {/* Description with improved typography and spacing */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.6 }}
-                className="text-muted-foreground max-w-lg space-y-4"
+                className="text-muted-foreground space-y-4 mb-8"
               >
                 <p className="leading-relaxed text-base">
                   Crafting <span className="text-primary font-medium">pixel-perfect</span> digital experiences with modern web technologies. Transforming ideas into <span className="text-primary font-medium">elegant</span> and <span className="text-primary font-medium">performant</span> solutions.
                 </p>
-                
+
                 <p className="leading-relaxed text-base">
                   Expert in building <span className="text-primary font-medium">responsive</span> and <span className="text-primary font-medium">intuitive</span> interfaces that delight users and drive business growth. Passionate about clean code and optimal user experiences.
                 </p>
               </motion.div>
-              
+
               {/* Tech Stack Section with improved styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 1 }}
-                className="pt-6"
+                className="mb-8"
               >
-                <div className="flex items-center gap-2 mb-4">
-                  <motion.div 
+                <div className="flex items-center gap-2 mb-4 justify-center">
+                  <motion.div
                     animate={{ rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                     className="text-primary"
@@ -218,10 +282,10 @@ const Home = () => {
                   </motion.div>
                   <h3 className="text-sm font-semibold text-primary tracking-wider">TECH STACK</h3>
                 </div>
-                
-                <div className="flex flex-wrap gap-2.5 max-w-lg">
+
+                <div className="flex flex-wrap gap-2.5 justify-center">
                   {[
-                    "React", "JavaScript", "HTML5", "CSS3", "Next.js", "TailwindCSS", 
+                    "React", "JavaScript", "HTML5", "CSS3", "Next.js", "TailwindCSS",
                     "Vite", "Framer Motion", "Lucide React", "Radix UI", "Web Accessibility"
                   ].map((tech, index) => (
                     <motion.div
@@ -238,61 +302,42 @@ const Home = () => {
                   ))}
                 </div>
               </motion.div>
-              
-              {/* CTA Buttons with enhanced styling */}
+
+              {/* Contact Me Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 1.2 }}
-                className="flex flex-wrap gap-4 pt-8"
+                className="flex justify-center mb-8"
               >
                 <motion.a
-                  href="#projects"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScrollToProjects();
-                  }}
+                  href="#contact"
                   whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   whileTap={{ scale: 0.95 }}
                   className="px-7 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-medium flex items-center gap-2.5 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group"
                 >
-                  <span className="relative z-10">View Projects</span>
-                  <ExternalLink className="h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-                  <motion.span 
+                  <span className="relative z-10">Contact Me</span>
+                  <Mail className="h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                  <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    animate={{ 
-                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] 
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
-                    transition={{ 
-                      duration: 5, 
-                      repeat: Infinity, 
-                      ease: "linear" 
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "linear"
                     }}
                   />
                 </motion.a>
-                
-                <motion.a
-                  href="#contact"
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.2)" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-7 py-3.5 bg-transparent border border-primary/30 text-primary rounded-full font-medium flex items-center gap-2.5 hover:bg-primary/5 transition-all duration-300 group"
-                >
-                  <span>Contact Me</span>
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <Mail className="h-4 w-4 group-hover:text-blue-500 transition-colors duration-300" />
-                  </motion.div>
-                </motion.a>
               </motion.div>
-              
+
               {/* Social Links with hover animations */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 1.2 }}
-                className="flex gap-4 pt-2"
+                className="flex gap-4 justify-center"
               >
                 {[
                   { icon: <Github className="h-5 w-5" />, url: "https://github.com/Suresh-cs-q", label: "GitHub" },
@@ -318,224 +363,18 @@ const Home = () => {
                   </motion.a>
                 ))}
               </motion.div>
-            </motion.div>
-            
-            {/* Right Column - Enhanced Profile Image with Interactive Effects */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-              className="relative flex justify-center lg:justify-end items-center"
-              style={{ y }}
-            >
-              {/* Enhanced decorative elements */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                {/* Animated circles with gradient borders */}
-                {[...Array(3)].map((_, index) => (
-                  <motion.div
-                    key={index}
-                    className="absolute rounded-full"
-                    style={{
-                      width: `${300 + (index * 80)}px`,
-                      height: `${300 + (index * 80)}px`,
-                      background: `linear-gradient(45deg, rgba(37, 99, 235, ${0.1 - index * 0.02}) 0%, rgba(79, 70, 229, ${0.1 - index * 0.02}) 100%)`,
-                      border: `1px solid rgba(59, 130, 246, ${0.2 - index * 0.05})`,
-                      filter: 'blur(0.5px)',
-                    }}
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      opacity: [0.3, 0.2, 0.3],
-                      rotate: [0, 360],
-                    }}
-                    transition={{
-                      duration: 15 + index * 5,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                ))}
-                
-                {/* Enhanced animated dots */}
-                {[...Array(20)].map((_, index) => {
-                  const angle = (index / 20) * Math.PI * 2;
-                  const radius = 180;
-                  const x = Math.cos(angle) * radius;
-                  const y = Math.sin(angle) * radius;
-                  
-                  return (
-                    <motion.div
-                      key={`dot-${index}`}
-                      className="absolute rounded-full bg-gradient-to-r from-blue-600 to-indigo-500"
-                      style={{
-                        width: index % 2 === 0 ? "6px" : "4px",
-                        height: index % 2 === 0 ? "6px" : "4px",
-                        x: x,
-                        y: y,
-                        filter: 'blur(0.5px)',
-                      }}
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.3, 0.7, 0.3],
-                        rotate: [0, 360],
-                      }}
-                      transition={{
-                        duration: 3,
-                        delay: index * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-              
-              {/* Enhanced profile image with parallax effect */}
-              <motion.div
-                className="relative z-10"
-                style={{
-                  x: springImageX,
-                  y: springImageY,
-                  rotate: springImageRotate,
-                }}
-              >
-                {/* Enhanced glow effect */}
-                <motion.div
-                  className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-600/30 to-indigo-500/30 blur-xl"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                
-                {/* Enhanced image container with border */}
-                <motion.div
-                  className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-xl"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Gradient border with improved styling */}
-                  <div className="absolute inset-0 p-1.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full">
-                    <div className="w-full h-full rounded-full overflow-hidden">
-                      {/* Image with enhanced quality */}
-                      <div className="w-full h-full relative">
-                        <img 
-                          src={profilePic} 
-                          alt="Suresh Kumar" 
-                          className="w-full h-full object-cover"
-                          style={{ 
-                            filter: 'contrast(1.05) brightness(1.02)',
-                          }}
-                        />
-                        {/* Subtle overlay for improved image quality */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/5 via-transparent to-indigo-500/5"></div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Enhanced overlay gradient with animation */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-indigo-500/20"
-                    animate={{
-                      opacity: [0.3, 0.5, 0.3],
-                      backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                </motion.div>
-                
-                {/* Enhanced floating achievement badges */}
-                {[
-                  { icon: <Code2 className="h-4 w-4" />, text: "150+ LeetCode", position: "-top-4 -right-4" },
-                  { icon: <Trophy className="h-4 w-4" />, text: "50+ Codeforces", position: "bottom-0 -left-8" },
-                  { icon: <Sparkles className="h-4 w-4" />, text: "Front-End Expert", position: "-bottom-4 right-10" },
-                ].map((badge, index) => (
-                  <motion.div
-                    key={badge.text}
-                    className={`absolute ${badge.position} bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-primary/20 shadow-lg flex items-center gap-1.5 z-20`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1 + (index * 0.2) }}
-                    whileHover={{ 
-                      scale: 1.1,
-                      boxShadow: "0 0 20px rgba(37, 99, 235, 0.2)",
-                    }}
-                  >
-                    {badge.icon}
-                    <span>{badge.text}</span>
-                    <motion.div
-                      className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/10 to-indigo-500/10"
-                      animate={{
-                        opacity: [0, 0.5, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
+            </div>
           </div>
         </div>
-        
-        {/* Enhanced Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          style={{ opacity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30"
-          onClick={handleScrollToProjects}
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center cursor-pointer group"
-          >
-            <span className="text-sm text-muted-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-              Scroll to explore
-            </span>
-            <motion.div 
-              className="p-2 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ArrowDown className="h-5 w-5 text-primary" />
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-500/20"
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 0, 0.3],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* Enhanced Projects Section with 3D Cards */}
-      <section id="projects" ref={projectsRef} className="w-full relative py-20 bg-background">
+      <section id="projects" ref={projectsRef} className="w-full relative py-20 bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background/80" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title with animated gradient */}
           <motion.div
@@ -562,7 +401,7 @@ const Home = () => {
               />
             </div>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-indigo-500 mx-auto rounded-full" />
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -632,8 +471,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ 
-                  duration: 0.6, 
+                transition={{
+                  duration: 0.6,
                   delay: index * 0.2,
                   type: "spring",
                   stiffness: 100
@@ -644,7 +483,7 @@ const Home = () => {
                 <Card className="bg-card/90 backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-500 group h-full w-full overflow-hidden">
                   {/* Enhanced card header with gradient */}
                   <div className={`h-3 w-full bg-gradient-to-r ${project.bgColor}`}></div>
-                  
+
                   <CardContent className="p-8 relative">
                     {/* Enhanced card background effects */}
                     <motion.div
@@ -658,18 +497,18 @@ const Home = () => {
                         ease: "easeInOut",
                       }}
                     />
-                    
+
                     {/* Decorative corner elements */}
                     <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
                       <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl ${project.bgColor} opacity-20 -rotate-45 transform origin-top-right`}></div>
                     </div>
-                    
+
                     {/* Enhanced content with better spacing */}
                     <div className="relative z-10 space-y-6">
                       {/* Project icon with enhanced animation */}
                       <motion.div
                         className={`w-16 h-16 rounded-full bg-gradient-to-r ${project.bgColor} flex items-center justify-center`}
-                        whileHover={{ 
+                        whileHover={{
                           scale: 1.1,
                           rotate: 10,
                           transition: { duration: 0.3 }
@@ -677,7 +516,7 @@ const Home = () => {
                       >
                         {project.icon}
                       </motion.div>
-                      
+
                       <div className="space-y-2">
                         <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
                           {project.title}
@@ -729,12 +568,12 @@ const Home = () => {
       </section>
 
       {/* Enhanced Experience Section */}
-      <section id="experience" className="w-full py-20 relative bg-background">
+      <section id="experience" className="w-full py-20 relative bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background/80" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title with animated gradient */}
           <motion.div
@@ -761,7 +600,7 @@ const Home = () => {
               />
             </div>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-indigo-500 mx-auto rounded-full" />
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -774,7 +613,7 @@ const Home = () => {
 
           <div className="relative">
             {/* Enhanced timeline line with gradient and animation */}
-            <motion.div 
+            <motion.div
               className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-600 via-indigo-500 to-blue-600"
               initial={{ height: 0 }}
               whileInView={{ height: "100%" }}
@@ -798,7 +637,7 @@ const Home = () => {
               {
                 title: "AI Model Trainer",
                 company: "Lune AI",
-                period: "Sept 2024 - Present",
+                period: "March 2024 - Sept 2024",
                 icon: <Brain className="h-6 w-6 text-primary" />,
                 bgColor: "from-indigo-500/20 to-purple-500/20",
                 points: [
@@ -826,9 +665,8 @@ const Home = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className={`relative mb-8 ${
-                  index % 2 === 0 ? "md:mr-auto md:ml-0" : "md:ml-auto md:mr-0"
-                } md:w-[calc(50%-2rem)] p-6`}
+                className={`relative mb-8 ${index % 2 === 0 ? "md:mr-auto md:ml-0" : "md:ml-auto md:mr-0"
+                  } md:w-[calc(50%-2rem)] p-6`}
               >
                 {/* Timeline dot with pulse effect */}
                 <motion.div
@@ -844,7 +682,7 @@ const Home = () => {
                 <Card className="bg-card/90 backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-500 group h-full">
                   {/* Enhanced card header with gradient */}
                   <div className={`h-3 w-full bg-gradient-to-r ${job.bgColor}`}></div>
-                  
+
                   <CardContent className="p-8 relative">
                     {/* Enhanced card background effects */}
                     <motion.div
@@ -858,18 +696,18 @@ const Home = () => {
                         ease: "easeInOut",
                       }}
                     />
-                    
+
                     {/* Decorative corner elements */}
                     <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
                       <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl ${job.bgColor} opacity-20 -rotate-45 transform origin-top-right`}></div>
                     </div>
-                    
+
                     {/* Enhanced content with better spacing */}
                     <div className="relative z-10 space-y-6">
                       {/* Job icon with enhanced animation */}
                       <motion.div
                         className={`w-16 h-16 rounded-full bg-gradient-to-r ${job.bgColor} flex items-center justify-center`}
-                        whileHover={{ 
+                        whileHover={{
                           scale: 1.1,
                           rotate: 10,
                           transition: { duration: 0.3 }
@@ -877,7 +715,7 @@ const Home = () => {
                       >
                         {job.icon}
                       </motion.div>
-                      
+
                       <div className="space-y-2">
                         <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
                           {job.title}
@@ -916,11 +754,11 @@ const Home = () => {
       </section>
 
       {/* Enhanced Skills Section */}
-      <section id="skills" className="w-full py-20 relative bg-background">
+      <section id="skills" className="w-full py-20 relative bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title */}
           <motion.div
@@ -975,7 +813,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Enhanced section title */}
-                  <motion.h3 
+                  <motion.h3
                     className="text-lg font-semibold mb-4 flex items-center relative z-10"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -1070,7 +908,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Enhanced section title */}
-                  <motion.h3 
+                  <motion.h3
                     className="text-lg font-semibold mb-6 flex items-center relative z-10"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -1149,11 +987,11 @@ const Home = () => {
       </section>
 
       {/* Enhanced Education Section with Improved UI */}
-      <section id="education" className="w-full py-20 relative bg-background">
+      <section id="education" className="w-full py-20 relative bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title with animated underline */}
           <motion.div
@@ -1180,7 +1018,7 @@ const Home = () => {
               />
             </div>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-indigo-500 mx-auto rounded-full" />
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1219,7 +1057,6 @@ const Home = () => {
                 degree: "Bachelor of Computer Science",
                 icon: "🏛️",
                 bgColor: "from-blue-600/20 to-cyan-500/20",
-                gpa: "3.7/4.0",
                 achievements: [
                   "Sindh Government fully funded scholarship",
                   "Programming Competition Winner"
@@ -1237,8 +1074,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ 
-                  duration: 0.6, 
+                transition={{
+                  duration: 0.6,
                   delay: index * 0.2,
                   type: "spring",
                   stiffness: 100
@@ -1249,7 +1086,7 @@ const Home = () => {
                 <Card className="bg-card/90 backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-500 group h-full w-full overflow-hidden">
                   {/* Enhanced card header with gradient */}
                   <div className={`h-3 w-full bg-gradient-to-r ${edu.bgColor}`}></div>
-                  
+
                   <CardContent className="p-8 relative">
                     {/* Enhanced card background effects */}
                     <motion.div
@@ -1263,19 +1100,19 @@ const Home = () => {
                         ease: "easeInOut",
                       }}
                     />
-                    
+
                     {/* Decorative corner elements */}
                     <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
                       <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl ${edu.bgColor} opacity-20 -rotate-45 transform origin-top-right`}></div>
                     </div>
-                    
+
                     {/* Enhanced content with better spacing */}
                     <div className="relative z-10 space-y-6">
                       {/* University icon with enhanced animation */}
                       <div className="flex items-start justify-between">
                         <motion.div
                           className={`w-16 h-16 rounded-full bg-gradient-to-r ${edu.bgColor} flex items-center justify-center text-2xl`}
-                          whileHover={{ 
+                          whileHover={{
                             scale: 1.1,
                             rotate: 10,
                             transition: { duration: 0.3 }
@@ -1283,12 +1120,12 @@ const Home = () => {
                         >
                           <span>{edu.icon}</span>
                         </motion.div>
-                        
+
                         <Badge variant="outline" className="bg-primary/5 px-3 py-1.5 text-sm">
                           {edu.period}
                         </Badge>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
                           {edu.university}
@@ -1349,7 +1186,7 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-          
+
           {/* Added decorative bottom element */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -1364,11 +1201,11 @@ const Home = () => {
       </section>
 
       {/* Enhanced Social Work & Volunteering Section with Improved UI */}
-      <section id="volunteering" className="w-full py-20 relative bg-background">
+      <section id="volunteering" className="w-full py-20 relative bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title with animated underline */}
           <motion.div
@@ -1395,7 +1232,7 @@ const Home = () => {
               />
             </div>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-indigo-500 mx-auto rounded-full" />
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1422,15 +1259,15 @@ const Home = () => {
                   "Supported initiatives providing mobile carts and stalls for food item sales"
                 ],
                 links: [
-                  { 
-                    label: "Facebook", 
-                    url: "https://www.facebook.com/khudkafeelpakistanofficial", 
-                    icon: <ExternalLink className="h-4 w-4" /> 
+                  {
+                    label: "Facebook",
+                    url: "https://www.facebook.com/khudkafeelpakistanofficial",
+                    icon: <ExternalLink className="h-4 w-4" />
                   },
-                  { 
-                    label: "LinkedIn", 
-                    url: "https://www.linkedin.com/company/khudkafeel-rozgar-project/posts/?feedView=all", 
-                    icon: <Linkedin className="h-4 w-4" /> 
+                  {
+                    label: "LinkedIn",
+                    url: "https://www.linkedin.com/company/khudkafeel-rozgar-project/posts/?feedView=all",
+                    icon: <Linkedin className="h-4 w-4" />
                   }
                 ]
               },
@@ -1466,8 +1303,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ 
-                  duration: 0.6, 
+                transition={{
+                  duration: 0.6,
                   delay: index * 0.2,
                   type: "spring",
                   stiffness: 100
@@ -1478,7 +1315,7 @@ const Home = () => {
                 <Card className="bg-card/90 backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-500 group h-full w-full overflow-hidden">
                   {/* Enhanced card header with gradient */}
                   <div className={`h-3 w-full bg-gradient-to-r ${item.bgColor}`}></div>
-                  
+
                   <CardContent className="p-8 relative">
                     {/* Enhanced card background effects */}
                     <motion.div
@@ -1492,18 +1329,18 @@ const Home = () => {
                         ease: "easeInOut",
                       }}
                     />
-                    
+
                     {/* Decorative corner elements */}
                     <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
                       <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl ${item.bgColor} opacity-20 -rotate-45 transform origin-top-right`}></div>
                     </div>
-                    
+
                     {/* Enhanced content with better spacing */}
                     <div className="relative z-10 space-y-6">
                       {/* Icon with enhanced animation */}
                       <motion.div
                         className={`w-16 h-16 rounded-full bg-gradient-to-r ${item.bgColor} flex items-center justify-center`}
-                        whileHover={{ 
+                        whileHover={{
                           scale: 1.1,
                           rotate: 10,
                           transition: { duration: 0.3 }
@@ -1511,7 +1348,7 @@ const Home = () => {
                       >
                         {item.icon}
                       </motion.div>
-                      
+
                       <div className="space-y-2">
                         <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
                           {item.title}
@@ -1559,7 +1396,7 @@ const Home = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 hover:bg-primary/10 rounded-full text-primary text-sm transition-all duration-300"
-                              whileHover={{ 
+                              whileHover={{
                                 scale: 1.05,
                                 boxShadow: "0 0 15px rgba(59, 130, 246, 0.3)"
                               }}
@@ -1577,7 +1414,7 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-          
+
           {/* Added decorative bottom element */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -1592,11 +1429,11 @@ const Home = () => {
       </section>
 
       {/* Enhanced Contact Section */}
-      <section id="contact" className="w-full py-20 relative bg-background">
+      <section id="contact" className="w-full py-20 relative bg-background" style={{ scrollMarginTop: '64px' }}>
         <div className="absolute inset-0">
           <div className="absolute inset-0 w-full bg-grid-white/5 bg-[size:60px_60px]" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full max-w-7xl">
           {/* Enhanced section title */}
           <motion.div
@@ -1623,7 +1460,7 @@ const Home = () => {
               />
             </div>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-indigo-500 mx-auto rounded-full" />
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1681,7 +1518,7 @@ const Home = () => {
                   <CardContent className="p-6 relative overflow-hidden">
                     {/* Background gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${contact.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                    
+
                     {/* Content */}
                     <div className="relative z-10 flex flex-col items-center text-center space-y-4">
                       <motion.div
@@ -1691,12 +1528,12 @@ const Home = () => {
                       >
                         {contact.icon}
                       </motion.div>
-                      
+
                       <div>
                         <h3 className="font-semibold text-lg mb-1">{contact.label}</h3>
                         <p className="text-sm text-muted-foreground break-all">{contact.value}</p>
                       </div>
-                      
+
                       <motion.div
                         className="text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         whileHover={{ scale: 1.1 }}
