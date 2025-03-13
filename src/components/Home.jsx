@@ -98,7 +98,7 @@ const Home = () => {
       <section 
         id="home" 
         ref={heroRef}
-        className="min-h-[100vh] w-full relative overflow-hidden flex items-center pt-16 md:pt-0"
+        className="min-h-[100vh] w-full relative overflow-hidden flex items-center pt-32 md:pt-24"
       >
         {/* Simplified background with subtle grid */}
         <div className="absolute inset-0">
@@ -143,91 +143,108 @@ const Home = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="flex flex-col space-y-6 lg:pr-8"
             >
-              {/* Enhanced greeting with animated underline */}
-              <div className="relative inline-block">
-                <motion.span
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-lg font-medium text-primary flex items-center gap-2"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  Hello, I'm
-                </motion.span>
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-500"
-                />
-              </div>
-              
               {/* Enhanced name with gradient and animated reveal */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight"
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
               >
-                <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
+                <motion.span 
+                  className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent inline-block"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   Suresh Kumar
-                </span>
+                </motion.span>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+                  className="h-1 bg-gradient-to-r from-blue-600 to-indigo-500 mt-2 rounded-full"
+                />
               </motion.h1>
               
-              {/* Enhanced role display with improved typing effect */}
+              {/* Enhanced role display with improved styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.4 }}
-                className="text-xl sm:text-2xl text-primary/80 font-medium h-8"
+                className="text-xl sm:text-2xl font-medium mb-8"
               >
-                <span className="inline-flex items-center gap-2">
-                  <Terminal className="h-5 w-5 animate-pulse" />
-                  {displayText}
-                  <span className="animate-blink">|</span>
+                <span className="inline-flex items-center gap-3">
+                  <motion.div
+                    animate={{ rotate: [0, 5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Code2 className="h-5 w-5 text-primary" />
+                  </motion.div>
+                  <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 bg-clip-text text-transparent font-semibold">
+                    Frontend Architect & React Specialist
+                  </span>
                 </span>
               </motion.div>
 
-              {/* Enhanced description with gradient text */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.6 }}
-                className="text-muted-foreground max-w-lg leading-relaxed"
-              >
-                A results-driven developer specializing in AI and full-stack development. 
-                I create intuitive, visually compelling solutions with expertise in LLM optimization 
-                and competitive programming.
-              </motion.p>
-              
-              {/* Skill badges with staggered animation */}
+              {/* Enhanced description with improved typography and spacing */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.8 }}
-                className="flex flex-wrap gap-2"
+                transition={{ duration: 0.7, delay: 0.6 }}
+                className="text-muted-foreground max-w-lg space-y-4"
               >
-                {["React", "JavaScript", "Python", "AI/ML", "TailwindCSS", "Node.js"].map((skill, index) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.8 + (index * 0.1) }}
-                    whileHover={{ scale: 1.1, y: -3 }}
-                  >
-                    <Badge variant="outline" className="bg-primary/5 py-1.5 px-3 text-sm hover:bg-primary/10 transition-colors duration-300">
-                      {skill}
-                    </Badge>
-                  </motion.div>
-                ))}
+                <p className="leading-relaxed text-base">
+                  Crafting <span className="text-primary font-medium">pixel-perfect</span> digital experiences with modern web technologies. Transforming ideas into <span className="text-primary font-medium">elegant</span> and <span className="text-primary font-medium">performant</span> solutions.
+                </p>
+                
+                <p className="leading-relaxed text-base">
+                  Expert in building <span className="text-primary font-medium">responsive</span> and <span className="text-primary font-medium">intuitive</span> interfaces that delight users and drive business growth. Passionate about clean code and optimal user experiences.
+                </p>
               </motion.div>
               
-              {/* CTA Buttons with hover effects */}
+              {/* Tech Stack Section with improved styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 1 }}
-                className="flex flex-wrap gap-4 pt-4"
+                className="pt-6"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <motion.div 
+                    animate={{ rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-primary"
+                  >
+                    <Rocket className="h-5 w-5" />
+                  </motion.div>
+                  <h3 className="text-sm font-semibold text-primary tracking-wider">TECH STACK</h3>
+                </div>
+                
+                <div className="flex flex-wrap gap-2.5 max-w-lg">
+                  {[
+                    "React", "JavaScript", "HTML5", "CSS3", "Next.js", "TailwindCSS", 
+                    "Vite", "Framer Motion", "Lucide React", "Radix UI", "Web Accessibility"
+                  ].map((tech, index) => (
+                    <motion.div
+                      key={tech}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 1 + (index * 0.05) }}
+                      whileHover={{ scale: 1.1, y: -3 }}
+                    >
+                      <Badge variant="outline" className="bg-primary/5 py-1.5 px-3.5 text-sm font-medium hover:bg-primary/10 transition-colors duration-300 border-primary/20">
+                        {tech}
+                      </Badge>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+              
+              {/* CTA Buttons with enhanced styling */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 1.2 }}
+                className="flex flex-wrap gap-4 pt-8"
               >
                 <motion.a
                   href="#projects"
@@ -235,22 +252,38 @@ const Home = () => {
                     e.preventDefault();
                     handleScrollToProjects();
                   }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-primary text-white rounded-full font-medium flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group"
+                  className="px-7 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-medium flex items-center gap-2.5 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">View Projects</span>
-                  <ExternalLink className="h-4 w-4 relative z-10" />
-                  <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <ExternalLink className="h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                  <motion.span 
+                    className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    animate={{ 
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] 
+                    }}
+                    transition={{ 
+                      duration: 5, 
+                      repeat: Infinity, 
+                      ease: "linear" 
+                    }}
+                  />
                 </motion.a>
                 
                 <motion.a
                   href="#contact"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.2)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-transparent border border-primary/30 text-primary rounded-full font-medium flex items-center gap-2 hover:bg-primary/5 transition-all duration-300"
+                  className="px-7 py-3.5 bg-transparent border border-primary/30 text-primary rounded-full font-medium flex items-center gap-2.5 hover:bg-primary/5 transition-all duration-300 group"
                 >
-                  Contact Me
+                  <span>Contact Me</span>
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Mail className="h-4 w-4 group-hover:text-blue-500 transition-colors duration-300" />
+                  </motion.div>
                 </motion.a>
               </motion.div>
               
@@ -307,6 +340,7 @@ const Home = () => {
                       height: `${300 + (index * 80)}px`,
                       background: `linear-gradient(45deg, rgba(37, 99, 235, ${0.1 - index * 0.02}) 0%, rgba(79, 70, 229, ${0.1 - index * 0.02}) 100%)`,
                       border: `1px solid rgba(59, 130, 246, ${0.2 - index * 0.05})`,
+                      filter: 'blur(0.5px)',
                     }}
                     animate={{
                       scale: [1, 1.05, 1],
@@ -337,6 +371,7 @@ const Home = () => {
                         height: index % 2 === 0 ? "6px" : "4px",
                         x: x,
                         y: y,
+                        filter: 'blur(0.5px)',
                       }}
                       animate={{
                         scale: [1, 1.5, 1],
@@ -365,7 +400,7 @@ const Home = () => {
               >
                 {/* Enhanced glow effect */}
                 <motion.div
-                  className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-500/20 blur-xl"
+                  className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-600/30 to-indigo-500/30 blur-xl"
                   animate={{
                     scale: [1, 1.1, 1],
                     opacity: [0.3, 0.5, 0.3],
@@ -383,18 +418,26 @@ const Home = () => {
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Gradient border */}
-                  <div className="absolute inset-0 p-1 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full">
+                  {/* Gradient border with improved styling */}
+                  <div className="absolute inset-0 p-1.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full">
                     <div className="w-full h-full rounded-full overflow-hidden">
-                      <img 
-                        src={profilePic} 
-                        alt="Suresh Kumar" 
-                        className="w-full h-full object-cover"
-                      />
+                      {/* Image with enhanced quality */}
+                      <div className="w-full h-full relative">
+                        <img 
+                          src={profilePic} 
+                          alt="Suresh Kumar" 
+                          className="w-full h-full object-cover"
+                          style={{ 
+                            filter: 'contrast(1.05) brightness(1.02)',
+                          }}
+                        />
+                        {/* Subtle overlay for improved image quality */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/5 via-transparent to-indigo-500/5"></div>
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Enhanced overlay gradient */}
+                  {/* Enhanced overlay gradient with animation */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-indigo-500/20"
                     animate={{
@@ -413,7 +456,7 @@ const Home = () => {
                 {[
                   { icon: <Code2 className="h-4 w-4" />, text: "150+ LeetCode", position: "-top-4 -right-4" },
                   { icon: <Trophy className="h-4 w-4" />, text: "50+ Codeforces", position: "bottom-0 -left-8" },
-                  { icon: <Sparkles className="h-4 w-4" />, text: "AI Specialist", position: "-bottom-4 right-10" },
+                  { icon: <Sparkles className="h-4 w-4" />, text: "Front-End Expert", position: "-bottom-4 right-10" },
                 ].map((badge, index) => (
                   <motion.div
                     key={badge.text}
