@@ -2,7 +2,6 @@
 
 A modern, responsive portfolio website showcasing my skills, projects, and professional experience as a Full Stack Developer and AI Specialist.
 
-![Portfolio Preview](https://i.imgur.com/placeholder-image.png)
 
 ## 🌟 Live Demo
 
@@ -69,17 +68,6 @@ npm run build
 yarn build
 ```
 
-The build artifacts will be stored in the `build/` directory.
-
-## 🌐 Deployment
-
-This portfolio is configured for easy deployment on Vercel:
-
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Vercel will automatically detect the Vite configuration
-4. Your site will be deployed and available at your Vercel URL
-
 ## 📂 Project Structure
 
 ```
@@ -96,17 +84,10 @@ portfolio/
 └── vite.config.js     # Vite configuration
 ```
 
-## 🔄 Future Updates
-
-- Blog section for sharing technical articles
-- Project case studies with detailed information
-- Interactive skills visualization
-- Testimonials section
-- Contact form with email integration
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Suresh Kumar
 
 ## 📞 Contact
 
@@ -116,4 +97,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Designed and developed by Suresh Kumar © 2024
+Designed and developed by Suresh Kumar © 2025
