@@ -58,8 +58,9 @@ export function Footer() {
             </div>
           </div>
         </div>
+        {/* Updated copyright section with more prominent styling */}
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          © 2025 Suresh Kumar. All rights reserved.
+          <span className="font-medium">© 2025</span> Suresh Kumar. All rights reserved.
         </div>
       </div>
     </footer>
